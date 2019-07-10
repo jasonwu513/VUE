@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>開啟這個網頁後,已經過了{{seconds}}秒</p>
+    </div>
+    
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                seconds: 0
+            },
+            created() {
+                setInterval(
+                    ()=>{this.seconds++;},1000
+                );
+            }
+        })
+    </script>
+
+    <h2>Reactivity</h2>
+    <p>實例初始化化後,才會加入getter setter , 現存屬性才具有Reacitivity , 如果一開始不在data 中的話,不具有響應性</p>
+
+    <!-- 下列範例 seconds 具有響應性, name 則無, -->
+    <!-- 可以在初始時設定為undefined -->
+
+        <script>
+            const vm = new Vue({
+                el: '#app2',
+                data: {
+                    formData: {
+                        seconds: 0
+
+                    }
+                },
+            })
+            // 無響應性
+            // vm.formdata.name = 'some user';
+            // 有響應性
+            vm.formData = Object.assign({},vm.formData,{
+                name: 'Some User'
+            });
+
+            // 或使用 (有響應性)
+            Vue.set(vm.formData, 'first', 'firstKey');
+
+
+        </script>
+
+    <h2>設定陣列 in data</h2>
+        
+        <script>
+            const vm2 = new Vue({
+                el: '#app3',
+                data: {
+                    dogs:['Mumu','Mimi','Mama']
+                },
+            })            
+            // 不work
+            // vm.dogs[2] = 'Bob';
+            // work
+            vm.dogs.splice(2,1,'Bob');
+            // work
+            Vue.set(vm2.dogs,3,'Bunbun')
+
+        </script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
